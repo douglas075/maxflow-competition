@@ -1,10 +1,12 @@
 from maxflow_base import MaxFlowInteractiveBase
 import networkx as nx
+import matplotlib.pyplot as plt
 
 class MaxFlowInteractive(MaxFlowInteractiveBase):
-    def __init__(self):
-        super().__init__(edge_name_dy=0.12, edge_flow_dy=-0.12)
+    def __init__(self, edge_name_dy=0.12, edge_flow_dy=-0.12, fig=None, ax=None):
+        super().__init__(edge_name_dy=edge_name_dy, edge_flow_dy=edge_flow_dy, fig=fig, ax=ax)
 
+        
     def build_graph(self):
         G = nx.DiGraph()
         G.add_edge('S', 'A', capacity=5)     
@@ -33,5 +35,14 @@ class MaxFlowInteractive(MaxFlowInteractiveBase):
             'T': (3, 2),
         }
 
+
+ 
 if __name__ == "__main__":
-    MaxFlowInteractive()
+    fig, axs = plt.subplots(1, 2, figsize=(18, 8))
+
+    mfi1 = MaxFlowInteractive(edge_name_dy=0.12, edge_flow_dy=-0.12, fig=fig, ax=axs[0])
+    mfi2 = MaxFlowInteractive(edge_name_dy=0.12, edge_flow_dy=-0.12, fig=fig, ax=axs[1])
+
+    plt.tight_layout()
+    plt.show()
+

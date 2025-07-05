@@ -2,12 +2,13 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 class MaxFlowInteractiveBase:
-    def __init__(self, edge_name_dy=0.2, edge_flow_dy=-0.2):
+    def __init__(self, edge_name_dy=0.2, edge_flow_dy=-0.2, fig=None, ax=None):
         self.edge_name_dy = edge_name_dy
         self.edge_flow_dy = edge_flow_dy
         self.G = self.build_graph()
         self.pos = self.fixed_positions()
-        self.fig, self.ax = plt.subplots(figsize=(14, 8))
+        self.fig = fig or plt.figure(figsize=(14, 8))
+        self.ax = ax or self.fig.add_subplot(111)
         self.cid = None
         self.flow_value = 0
         self.flow_dict = {}
@@ -16,7 +17,6 @@ class MaxFlowInteractiveBase:
         }
         self.draw_graph()
         self.connect_events()
-        plt.show()
 
     def build_graph(self):
         raise NotImplementedError
@@ -74,6 +74,9 @@ class MaxFlowInteractiveBase:
         self.cid = self.fig.canvas.mpl_connect('button_press_event', self.on_click)
 
     def on_click(self, event):
+        if event.inaxes != self.ax:
+            return
+
         if event.button not in (1, 3):
             return
 
