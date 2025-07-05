@@ -37,10 +37,3 @@ class MaxFlowInteractive(MaxFlowInteractiveBase):
 if __name__ == "__main__":
     MaxFlowInteractive()
 
-echo "# maxflow-competition" >> README.md
-git init
-git add .
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/douglas075/maxflow-competition.git
-git push -u origin main
