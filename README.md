@@ -1,1 +1,1 @@
-# -maxflow
+# maxflow competition
