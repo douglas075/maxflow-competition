@@ -15,6 +15,8 @@ class MaxFlowInteractiveBase:
         self.edge_labels_map = {
             (u, v): f"{i}" for i, (u, v) in enumerate(self.G.edges())
         }
+        self.log = []  # 紀錄互動
+        self.compute_max_flow() 
         self.draw_graph()
         self.connect_events()
 
@@ -29,7 +31,7 @@ class MaxFlowInteractiveBase:
 
     def draw_graph(self):
         self.ax.clear()
-        self.compute_max_flow()
+        # self.compute_max_flow()
 
         nx.draw(
             self.G, self.pos, ax=self.ax, with_labels=True,
@@ -51,6 +53,15 @@ class MaxFlowInteractiveBase:
         self.draw_offset_labels(edge_flows, dy=self.edge_flow_dy, fontsize=18, color='red')
 
         self.ax.set_title(f"Max Flow = {self.flow_value}", fontsize=20, pad=20)
+
+        # 根據 ax 決定左上角或右上角顯示 log
+        if self.ax.get_subplotspec().colspan.start == 0:
+            # 左圖
+            self.draw_log(x=0.02, y=0.98, halign='left', valign='top')
+        else:
+            # 右圖
+            self.draw_log(x=0.98, y=0.98, halign='right', valign='top')
+
         self.ax.axis("off")
         self.fig.canvas.draw()
 
@@ -70,13 +81,25 @@ class MaxFlowInteractiveBase:
                 va='center'
             )
 
+    def draw_log(self, x=0.02, y=0.98, halign='left', valign='top'):
+        if not self.log:
+            return
+        log_text = "\n".join(self.log[-6:])
+        self.ax.text(
+            x, y, log_text,
+            transform=self.ax.transAxes,
+            fontsize=12,
+            verticalalignment=valign,
+            horizontalalignment=halign,
+            bbox=dict(facecolor='white', alpha=0.6, edgecolor='gray')
+        )
+
     def connect_events(self):
         self.cid = self.fig.canvas.mpl_connect('button_press_event', self.on_click)
 
     def on_click(self, event):
         if event.inaxes != self.ax:
             return
-
         if event.button not in (1, 3):
             return
 
@@ -96,11 +119,22 @@ class MaxFlowInteractiveBase:
 
         if closest_edge and min_dist < 0.3:
             u, v = closest_edge
+            old_cap = self.G[u][v]['capacity']
+            edge_idx = self.edge_labels_map[(u, v)]  # 尋找該邊的編號
+
             if event.button == 1:
                 self.G[u][v]['capacity'] *= 2
+                op = "*=2"
             elif event.button == 3:
-                self.G[u][v]['capacity'] = max(1, int(self.G[u][v]['capacity'] // 2))
+                self.G[u][v]['capacity'] = max(1, int(old_cap // 2))
+                op = "/=2"
+
+            # 重新計算 flow，並紀錄 log
+            self.compute_max_flow()
+            self.log.append(f"e{edge_idx}{op} MF:{self.flow_value}")
+
             self.draw_graph()
+
 
     @staticmethod
     def point_line_distance(px, py, x0, y0, x1, y1):

@@ -6,7 +6,6 @@ class MaxFlowInteractive(MaxFlowInteractiveBase):
     def __init__(self, edge_name_dy=0.12, edge_flow_dy=-0.12, fig=None, ax=None):
         super().__init__(edge_name_dy=edge_name_dy, edge_flow_dy=edge_flow_dy, fig=fig, ax=ax)
 
-        
     def build_graph(self):
         G = nx.DiGraph()
         G.add_edge('S', 'A', capacity=5)
@@ -17,7 +16,6 @@ class MaxFlowInteractive(MaxFlowInteractiveBase):
         G.add_edge('C', 'E', capacity=6)
         G.add_edge('D', 'T', capacity=7)
         G.add_edge('E', 'T', capacity=7)
-
         return G
 
     def fixed_positions(self):
@@ -32,13 +30,11 @@ class MaxFlowInteractive(MaxFlowInteractiveBase):
         }
 
 
- 
 if __name__ == "__main__":
     fig, axs = plt.subplots(1, 2, figsize=(18, 8))
 
-    mfi1 = MaxFlowInteractive(edge_name_dy=0.12, edge_flow_dy=-0.12, fig=fig, ax=axs[0])
-    mfi2 = MaxFlowInteractive(edge_name_dy=0.12, edge_flow_dy=-0.12, fig=fig, ax=axs[1])
+    mfi1 = MaxFlowInteractive(fig=fig, ax=axs[0])
+    mfi2 = MaxFlowInteractive(fig=fig, ax=axs[1])
 
     plt.tight_layout()
     plt.show()
-
