@@ -36,7 +36,7 @@ class MaxFlowInteractive(MaxFlowInteractiveBase):
         }
         
 if __name__ == "__main__":
-    fig, ax = plt.subplots(figsize=(12, 8))
+    fig, ax = plt.subplots(figsize=(16, 8))
     example = MaxFlowInteractive(edge_name_dy=0.2, edge_flow_dy=-0.2, fig=fig, ax=ax)
 
     plt.tight_layout()
