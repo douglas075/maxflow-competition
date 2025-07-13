@@ -49,8 +49,8 @@ class MaxFlowInteractiveBase:
             for u, v, d in self.G.edges(data=True)
         }
 
-        self.draw_offset_labels(edge_names, dy=self.edge_name_dy, fontsize=0, color='black')
-        self.draw_offset_labels(edge_flows, dy=self.edge_flow_dy, fontsize=18, color='red')
+        self.draw_offset_labels(edge_names, dy=self.edge_name_dy, fontsize=18, color='black')
+        self.draw_offset_labels(edge_flows, dy=self.edge_flow_dy, fontsize=24, color='red')
 
         self.ax.set_title(f"Max Flow = {self.flow_value}", fontsize=20, pad=20)
 

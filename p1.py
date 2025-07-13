@@ -34,27 +34,13 @@ class MaxFlowInteractive(MaxFlowInteractiveBase):
 if __name__ == "__main__":
     fig, axs = plt.subplots(1, 2, figsize=(18, 8))
 
-    mfi1 = MaxFlowInteractive(fig=fig, ax=axs[0])
-    mfi2 = MaxFlowInteractive(fig=fig, ax=axs[1])
-
-    timer = TimerOverlay(fig, duration=120)
-
-    def on_click(event):
-        if event.inaxes not in [axs[0], axs[1]]:
-            return
-
-        px, py = event.xdata, event.ydata
-        for mfi in [mfi1, mfi2]:
-            for u, v in mfi.G.edges():
-                dist = mfi.point_line_distance(px, py, *mfi.pos[u], *mfi.pos[v])
-                if dist < 0.3:
-                    return  
-
-        timer.toggle() 
-
-    fig.canvas.mpl_connect("button_press_event", on_click)
-
+    mfi1 = MaxFlowInteractive(edge_flow_dy=-0.18, fig=fig, ax=axs[0])
+    mfi2 = MaxFlowInteractive(edge_flow_dy=-0.18, fig=fig, ax=axs[1])
+   
     plt.tight_layout()
+
+    timer = TimerOverlay(fig, duration=20)
+
     plt.show()
 
 '''
