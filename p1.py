@@ -39,7 +39,7 @@ if __name__ == "__main__":
    
     plt.tight_layout()
 
-    timer = TimerOverlay(fig, duration=20)
+    timer = TimerOverlay(fig, duration=90)
 
     plt.show()
 
