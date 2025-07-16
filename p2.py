@@ -42,8 +42,8 @@ class MaxFlowInteractive(MaxFlowInteractiveBase):
 if __name__ == "__main__":
     fig, axs = plt.subplots(1, 2, figsize=(18, 8))
 
-    mfi1 = MaxFlowInteractive(edge_name_dy=0.12, edge_flow_dy=-0.15, fig=fig, ax=axs[0])
-    mfi2 = MaxFlowInteractive(edge_name_dy=0.12, edge_flow_dy=-0.15, fig=fig, ax=axs[1])
+    mfi1 = MaxFlowInteractive(edge_name_dy=0.12, edge_flow_dy=-0.20, fig=fig, ax=axs[0])
+    mfi2 = MaxFlowInteractive(edge_name_dy=0.12, edge_flow_dy=-0.20, fig=fig, ax=axs[1])
 
     timer = TimerOverlay(fig, duration=120)
 
